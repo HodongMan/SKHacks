@@ -31,6 +31,7 @@ class Lecture(models.Model):
         related_name='Lectures',
         on_delete=models.CASCADE
     )
+    Student = models.ManyToManyField(Student)
     Name = models.CharField(max_length=200)
     Description = models.TextField()
     Max_chapter = models.IntegerField()
