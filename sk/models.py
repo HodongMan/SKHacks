@@ -54,6 +54,7 @@ class Chapter(models.Model):
         on_delete=models.CASCADE
     )
 
+    Name = models.CharField(max_length=200, blank=True, default='')
     Current_chapter = models.IntegerField()
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()

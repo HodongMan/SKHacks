@@ -7,12 +7,6 @@ from sk.models import Attendence
 
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
 
-    Lectures = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='lecture-detail'
-    )
-
     class Meta:
         model = Student
         fields = (
@@ -25,18 +19,19 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
             'Age',
             'Description',
             'Created',
-            'Lectures',
         )
 
 class LectureSerializer(serializers.HyperlinkedModelSerializer):
 
-    students = serializers.SlugRelatedField(queryset=Student.objects.all(), slug_field='Name')
+    Student = StudentSerializer(many=True, read_only=True)
+    Professor = serializers.SlugRelatedField(queryset=Professor.objects.all(), slug_field='Name')
 
     class Meta:
         model = Lecture
         fields = (
             'url',
-            'students',
+            'Student',
+            'Professor',
             'Name',
             'Description',
             'Max_chapter',
@@ -46,12 +41,19 @@ class LectureSerializer(serializers.HyperlinkedModelSerializer):
 
 class ProfessorSerializer(serializers.HyperlinkedModelSerializer):
 
+    Lectures = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='lecture-detail'
+    )
+
     class Meta:
 
         model = Professor
         fields = (
             'url',
             'pk',
+            'Lectures',
             'Name',
             'Major',
             'Created',
@@ -60,12 +62,16 @@ class ProfessorSerializer(serializers.HyperlinkedModelSerializer):
 
 class ChapterSerializer(serializers.HyperlinkedModelSerializer):
 
+    Lecture = serializers.SlugRelatedField(queryset=Lecture.objects.all(), slug_field='Name')
+
     class Meta:
 
         model = Chapter
         fields = (
             'url',
             'pk',
+            'Lecture',
+            'Name',
             'Current_chapter',
             'start_date',
             'end_date',
@@ -74,10 +80,18 @@ class ChapterSerializer(serializers.HyperlinkedModelSerializer):
 
 class AttendenceSerializer(serializers.HyperlinkedModelSerializer):
 
+    Lecture = serializers.SlugRelatedField(queryset=Lecture.objects.all(), slug_field='Name')
+    Student = serializers.SlugRelatedField(queryset=Student.objects.all(), slug_field='Name')
+    Chapter = serializers.SlugRelatedField(queryset=Chapter.objects.all(), slug_field='Name')
+
+
     class Meta:
 
         model = Attendence
         fields = (
             'url',
-            'pk'
+            'pk',
+            'Lecture',
+            'Student',
+            'Chapter',
         )
