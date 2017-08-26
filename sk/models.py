@@ -14,9 +14,15 @@ class Student(models.Model):
     Major = models.CharField(max_length=200, blank=True, default='')
     Gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     Birth = models.DateField()
-    Age = models.TextField()
-    Description = models.IntegerField()
+    Age = models.IntegerField()
+    Description = models.TextField()
     Created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('Created',)
+
+    def __str__(self):
+        return self.Name
 
 class Professor(models.Model):
 

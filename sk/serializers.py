@@ -10,7 +10,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
     Lectures = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name='lecture'
+        view_name='lecture-detail'
     )
 
     class Meta:
@@ -41,4 +41,43 @@ class LectureSerializer(serializers.HyperlinkedModelSerializer):
             'Description',
             'Max_chapter',
             'Created',
+        )
+
+
+class ProfessorSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+
+        model = Professor
+        fields = (
+            'url',
+            'pk',
+            'Name',
+            'Major',
+            'Created',
+        )
+
+
+class ChapterSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+
+        model = Chapter
+        fields = (
+            'url',
+            'pk',
+            'Current_chapter',
+            'start_date',
+            'end_date',
+        )
+
+
+class AttendenceSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+
+        model = Attendence
+        fields = (
+            'url',
+            'pk'
         )
