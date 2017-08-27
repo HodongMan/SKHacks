@@ -13,6 +13,12 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
+from django.shortcuts import render
+
+def url_list(request):
+
+    return render(request, 'index.html', {})
+
 class StudentList(generics.ListCreateAPIView):
 
     queryset = Student.objects.all()
