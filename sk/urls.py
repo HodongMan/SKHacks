@@ -4,7 +4,9 @@ from sk import views
 urlpatterns = [
 
     url(r'^$', views.url_list, name='url_list'),
-
+    url(r'^attendance/$',
+        views.atte_list, name='atten-list'
+    ),
     url(r'^api/student/$',
         views.StudentList.as_view(),
         name=views.StudentList.name
